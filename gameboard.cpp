@@ -11,14 +11,23 @@ GameBoard::GameBoard()
 {
     qsrand(static_cast<quint32>(QTime::currentTime().msec()));
 
+    // Kártyák száma: sorok x oszlopok száma
     int cards = m_rows * m_columns;
-    std::vector<char> letters;
-    char first = 'A';
-    char last = 'A' + static_cast<char>(cards) - 1;
 
-    for (int i = 0; i < cards; i++) {
-        char l = first + (qrand() % (last - first));
-        letters.push_back(l);
+    // Gondoskodunk róla, hogy páros számú kártya legyen
+    if ((cards % 2) != 0) {
+        cards -= 1;
+    }
+
+    // Gondolkodtató feladat: "jó"-e ez így? Mi történik, ha cards túl nagy szám?
+
+    std::vector<char> letters;
+
+    // A-tól kezdve mindegyik betűből kettőt elhelyezünk a listában
+    for (char i = 'A'; i < ('A' + cards / 2); i++) {
+        // Mindegyikből kettő kell, hogy legyen majd párja
+        letters.push_back(i);
+        letters.push_back(i);
     }
 
     int cardWidth = 100;
@@ -27,8 +36,18 @@ GameBoard::GameBoard()
 
     for (int i = 0; i < m_rows; i++) {
         for (int j = 0; j < m_columns; j++) {
-            char c = letters[0];
-            letters.erase(letters.begin());
+            // Ennyi betűnk van összesen
+            int count = static_cast<int>(letters.size());
+            // Választunk egyet véletlenszerűen
+            int index = qrand() % count;
+
+            // Megkeressük a vektorban az oda mutató iterátort
+            auto it = letters.begin() + index;
+            // Ez a betű van benne
+            char c = *it;
+            // Töröljük a vektorból
+            letters.erase(it);
+
             Card *card = new Card(c, cardWidth, cardHeight);
             card->setPos(QPointF((cardWidth + margin) * j, (cardHeight + margin) * i));
 
