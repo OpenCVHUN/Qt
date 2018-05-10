@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <QTime>
+#include <QGraphicsDropShadowEffect>
 
 GameBoard::GameBoard()
     : m_rows(2)
@@ -26,6 +27,13 @@ GameBoard::GameBoard()
             letters.erase(letters.begin());
             Card *card = new Card(c);
             card->setPos(QPointF(80 * j, 150 * i));
+
+            QGraphicsDropShadowEffect *effect = new QGraphicsDropShadowEffect(this);
+            effect->setColor(QColor(0, 0, 0, 200));
+            effect->setOffset(0);
+            effect->setBlurRadius(12);
+            card->setGraphicsEffect(effect);
+
             this->addItem(card);
         }
     }
