@@ -3,10 +3,12 @@
 #include <QFont>
 #include <QPainter>
 
-Card::Card(char c)
+Card::Card(char c, int width, int height)
     : m_letter(c)
+    , m_width(width)
+    , m_height(height)
 {
-    QPixmap p = paint(m_letter, QColor(Qt::white), QColor(Qt::black), 80, 150);
+    QPixmap p = paint(m_letter, QColor(Qt::white), QColor(Qt::black), m_width, m_height);
     this->setPixmap(p);
 }
 

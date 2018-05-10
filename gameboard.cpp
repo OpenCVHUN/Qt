@@ -21,12 +21,16 @@ GameBoard::GameBoard()
         letters.push_back(l);
     }
 
+    int cardWidth = 100;
+    int cardHeight = 170;
+    int margin = 10;
+
     for (int i = 0; i < m_rows; i++) {
         for (int j = 0; j < m_columns; j++) {
             char c = letters[0];
             letters.erase(letters.begin());
-            Card *card = new Card(c);
-            card->setPos(QPointF(80 * j, 150 * i));
+            Card *card = new Card(c, cardWidth, cardHeight);
+            card->setPos(QPointF((cardWidth + margin) * j, (cardHeight + margin) * i));
 
             QGraphicsDropShadowEffect *effect = new QGraphicsDropShadowEffect(this);
             effect->setColor(QColor(0, 0, 0, 200));

@@ -9,9 +9,11 @@ class Card : public QGraphicsPixmapItem
 {
 private:
     char m_letter;
+    int m_width;
+    int m_height;
 
 public:
-    Card(char c);
+    Card(char c, int width, int height);
     QPixmap paint(char c, QColor bg, QColor fg, int width, int height);
 };
 
