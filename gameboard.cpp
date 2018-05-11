@@ -11,6 +11,40 @@ GameBoard::GameBoard()
     , m_cardShown(nullptr)
     , m_canClick(true)
 {
+    this->startGame();
+}
+
+Card *GameBoard::cardShown() const
+{
+    return m_cardShown;
+}
+
+void GameBoard::setCardShown(Card *c)
+{
+    m_cardShown = c;
+}
+
+bool GameBoard::canClick() const
+{
+    return m_canClick;
+}
+
+void GameBoard::setCanClick(bool c)
+{
+    m_canClick = c;
+}
+
+void GameBoard::startGame()
+{
+    int oldCount = this->items().count();
+    for (int i = 0; i < oldCount; i++) {
+        auto item = this->items().at(0);
+        delete item;
+    }
+
+    this->setCanClick(true);
+    this->setCardShown(nullptr);
+
     qsrand(static_cast<quint32>(QTime::currentTime().msec()));
 
     // Kártyák száma: sorok x oszlopok száma
@@ -64,32 +98,13 @@ GameBoard::GameBoard()
     }
 }
 
-Card *GameBoard::cardShown() const
-{
-    return m_cardShown;
-}
-
-void GameBoard::setCardShown(Card *c)
-{
-    m_cardShown = c;
-}
-
-bool GameBoard::canClick() const
-{
-    return m_canClick;
-}
-
-void GameBoard::setCanClick(bool c)
-{
-    m_canClick = c;
-}
-
-void GameBoard::startGame()
-{
-
-}
-
 void GameBoard::endGame()
 {
+    this->setCanClick(false);
 
+    int oldCount = this->items().count();
+    for (int i = 0; i < oldCount; i++) {
+        auto *c = static_cast<Card*>(this->items().at(i));
+        c->showFace();
+    }
 }

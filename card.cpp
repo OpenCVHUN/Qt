@@ -3,6 +3,7 @@
 
 #include <QFont>
 #include <QPainter>
+#include <QMessageBox>
 
 Card::Card(char c, int width, int height)
     : m_letter(c)
@@ -45,8 +46,15 @@ void Card::mousePressEvent(QGraphicsSceneMouseEvent *event)
             QTimer::singleShot(1500, [this, board] {
 
                 if (m_letter == board->cardShown()->m_letter) {
+                    board->removeItem(board->cardShown());
+                    board->removeItem(this);
+
                     delete board->cardShown();
                     delete this;
+
+                    if (board->items().count() == 0) {
+                        QMessageBox::information(nullptr, "Grat!", "Nyertéééél!");
+                    }
                 } else {
                     this->showBack();
                     board->cardShown()->showBack();

@@ -8,11 +8,21 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    GameBoard *board = new GameBoard();
-    ui->gameView->setScene(board);
+    m_board = new GameBoard();
+    ui->gameView->setScene(m_board);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    m_board->startGame();
+}
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    m_board->endGame();
 }
