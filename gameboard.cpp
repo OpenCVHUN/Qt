@@ -8,6 +8,8 @@
 GameBoard::GameBoard()
     : m_rows(2)
     , m_columns(8)
+    , m_cardShown(nullptr)
+    , m_canClick(true)
 {
     qsrand(static_cast<quint32>(QTime::currentTime().msec()));
 
@@ -60,6 +62,26 @@ GameBoard::GameBoard()
             this->addItem(card);
         }
     }
+}
+
+Card *GameBoard::cardShown() const
+{
+    return m_cardShown;
+}
+
+void GameBoard::setCardShown(Card *c)
+{
+    m_cardShown = c;
+}
+
+bool GameBoard::canClick() const
+{
+    return m_canClick;
+}
+
+void GameBoard::setCanClick(bool c)
+{
+    m_canClick = c;
 }
 
 void GameBoard::startGame()
